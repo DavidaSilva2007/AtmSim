@@ -1,0 +1,110 @@
+import time
+
+#Balance of the account
+balance = 1000
+
+#List of transaction history
+transactions = []
+
+#Stores options for main meny in a list, and displays it
+def main_ui():
+    menu_options = [
+        "Show balance",
+        "Deposit",
+        "Withdraw",
+        "Show transaction history",
+        "Log out"
+    ]
+
+    print("Select what you would like to access:\n")
+    for i, option in enumerate(menu_options, start=1):
+        print(f"{i}. {option}")
+
+    choice = int(input("Input: "))
+    print("\n")
+    return choice
+
+
+
+#Let user input pin and log into the account
+def log_in():
+    pin = int(input('Please enter your pin: '))
+    if pin == 1234:
+        return True
+    else:
+        return False
+
+#Let user log out of account so another can
+def log_out():
+    print('Thank you! Exiting...')
+
+#Print out user's new balance
+def show_balance():
+    print(f'Your balance is: ${balance}')
+
+#Let user input a number to add into balance
+def deposit():
+    global balance
+
+    amount = int(input('How much would you like to deposit into your account?: $'))
+    balance += amount
+    print(f'Your new balance is ${balance}')
+    transactions.append(f'Withdrew ${amount}')
+
+#Let user take money (subtract) from balance
+def withdraw():
+    global balance
+
+    amount = int(input('How much would you like to withdraw from your account?: $'))
+    
+    #Checks wether you are withdrawing over what is in your balance
+    while  amount > balance:
+        print('Withdraw failed, not enough funds, try again.')
+        amount = int(input('Enter a new amount to withdraw: $'))
+    
+    balance -= amount
+    
+    print(f'Your new balance is ${balance}')
+    transactions.append(f'Withdrew ${amount}')
+
+#Shows deposits and withdrawls in transactions
+def show_transaction_history():
+    if not transactions:
+        print('Trnsaction history is empty.')
+    else:
+        print("Transaction History:")
+        for i, t in enumerate(transactions, start=1):
+            print(f"{i}. {t}")
+
+def main():
+    print(time.time())
+
+    #This checks to see if you input the right pin, so it let's you access account
+    while not log_in():
+        print('Invalid PIN, please try again')
+    print('You are logged in!')
+
+    #Keeps menu open until log_out() is called
+    while True:
+
+        #Makes menu_choice the value of main_ui, that way we don't keep asking for input
+        menu_choice = main_ui()
+
+        #Puts user in specific menus
+        if menu_choice == 1:
+            show_balance()
+        elif menu_choice == 2:
+            deposit()
+        elif menu_choice == 3:
+            withdraw()
+        elif menu_choice == 4:
+            show_transaction_history()
+        elif menu_choice == 5:
+            log_out()
+            return False
+        else:
+            print('Invalid menu, try again')
+
+        time.sleep(2)
+
+main()
