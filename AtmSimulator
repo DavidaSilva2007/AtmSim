@@ -50,7 +50,7 @@ def deposit():
     amount = int(input('How much would you like to deposit into your account?: $'))
     balance += amount
     print(f'Your new balance is ${balance}')
-    transactions.append(f'Withdrew ${amount}')
+    get_time(amount, "d")
 
 #Let user take money (subtract) from balance
 def withdraw():
@@ -66,7 +66,7 @@ def withdraw():
     balance -= amount
     
     print(f'Your new balance is ${balance}')
-    transactions.append(f'Withdrew ${amount}')
+    get_time(amount, "w")
 
 #Shows deposits and withdrawls in transactions
 def show_transaction_history():
@@ -77,9 +77,15 @@ def show_transaction_history():
         for i, t in enumerate(transactions, start=1):
             print(f"{i}. {t}")
 
+#Add timestamp to history given withdraw or deposit
+def get_time(amount, action):
+    if action == "w":
+        action = "Withdrew"
+    elif action == "d":
+        action = "Deposited"
+    timestamp = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    transactions.append(f'[{timestamp}] {action} ${amount}')
 
-def get_time():
-    time.time()
 
 def main():
 
@@ -87,8 +93,6 @@ def main():
     while not log_in():
         print('Invalid PIN, please try again')
     print('You are logged in!')
-
-    print(time)
 
     #Keeps menu open until log_out() is called
     while True:
