@@ -1,4 +1,5 @@
 import time
+import datetime
 
 #Balance of the account
 balance = 1000
@@ -76,13 +77,18 @@ def show_transaction_history():
         for i, t in enumerate(transactions, start=1):
             print(f"{i}. {t}")
 
+
+def get_time():
+    time.time()
+
 def main():
-    print(time.time())
 
     #This checks to see if you input the right pin, so it let's you access account
     while not log_in():
         print('Invalid PIN, please try again')
     print('You are logged in!')
+
+    print(time)
 
     #Keeps menu open until log_out() is called
     while True:
