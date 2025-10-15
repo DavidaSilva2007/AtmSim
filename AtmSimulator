@@ -47,26 +47,34 @@ def show_balance():
 def deposit():
     global balance
 
-    amount = int(input('How much would you like to deposit into your account?: $'))
-    balance += amount
-    print(f'Your new balance is ${balance}')
-    get_time(amount, "d")
+    #Using try in case user input is NOT an int
+    try:
+        amount = int(input('How much would you like to deposit into your account?: $'))
+        balance += amount
+        print(f'Your new balance is ${balance}')
+        get_time(amount, "d")
+    except ValueError:
+        print('Invalid input, try again.')
 
 #Let user take money (subtract) from balance
 def withdraw():
     global balance
 
-    amount = int(input('How much would you like to withdraw from your account?: $'))
-    
-    #Checks wether you are withdrawing over what is in your balance
-    while  amount > balance:
-        print('Withdraw failed, not enough funds, try again.')
-        amount = int(input('Enter a new amount to withdraw: $'))
-    
-    balance -= amount
-    
-    print(f'Your new balance is ${balance}')
-    get_time(amount, "w")
+    #Using try n case user input is NOT an int
+    try:
+        amount = int(input('How much would you like to withdraw from your account?: $'))
+        
+        #Checks wether you are withdrawing over what is in your balance
+        while  amount > balance:
+            print('Withdraw failed, not enough funds, try again.')
+            amount = int(input('Enter a new amount to withdraw: $'))
+        
+        balance -= amount
+        
+        print(f'Your new balance is ${balance}')
+        get_time(amount, "w")
+    except ValueError:
+        print('Invalid input, try again.')
 
 #Shows deposits and withdrawls in transactions
 def show_transaction_history():
